@@ -1,17 +1,20 @@
+# encoding: UTF-8
 module Exlsx
 	module Font
-		def merge(new_obj)
-			%w{name charset family b i u strike outline shadow condense extend sz color}.each do |opt|
-				opt = opt.to_sym
-				if self.send(opt)
-					new_obj.send("#{opt}=", self.send(opt)) unless new_obj.send(opt)
-				end
+		include Exlsx::AttributeEquality
+		module ClassMethods
+			def attributes
+				%w{name charset family b i u strike outline shadow condense extend sz color}.map{ |attr| attr.to_sym }
 			end
-			new_obj
+		end
+
+		def dont_duplicate?
+			true
 		end
 	end
 end
 
 class Axlsx::Font
 	include Exlsx::Font
+	extend  Exlsx::Font::ClassMethods
 end

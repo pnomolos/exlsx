@@ -2,7 +2,11 @@
 module Exlsx
 	module Cell
 		def merge_style(opts = {})
-			@style = row.worksheet.workbook.styles.merge_style(self.style, opts)
+			if @style
+				@style = @styles.merge_style(@style, opts)
+			else
+				@style = @styles.add_style(opts)
+			end
 		end
 	end
 end

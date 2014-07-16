@@ -1,5 +1,14 @@
+# encoding: UTF-8
 module Exlsx
 	module Border
+		def dont_duplicate?
+			true
+		end
+
+		def ==(v)
+			false
+		end
+
 		def merge(new_obj)
 			used_edges = new_obj.prs.map{|pr| pr.name}
 			self.prs.each do |pr|
